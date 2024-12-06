@@ -34,14 +34,29 @@ void printMenu() {
         "7.exit\n");
 }
 
+bool check_input(int input, int leftborder, int rightborder)
+{
+    if (input > rightborder || input < leftborder)
+        return 1;
+    else
+        return 0;
+}
+
 void Add_One(int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const int day)
 {
     int brand, amount;
     scanf_s("%d", &brand);
-    for (int i = 0; i < NUM_OF_TYPES; i++)
+    if (check_input(brand, 0, 4))
     {
-        scanf_s(" %d", &amount);
-        Cube[day][brand][i] = amount;
+        printf("this brand dont exist\n");
+    }
+    else
+    {
+        for (int i = 0; i < NUM_OF_TYPES; i++)
+        {
+            scanf_s(" %d", &amount);
+            Cube[day][brand][i] = amount;
+        }
     }
 }
 
@@ -146,7 +161,7 @@ int Overall_Best_Sold_Brand(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_T
 
 }
 
-int Best_Sold_Type(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const int day, int &max)
+int Best_Sold_Type(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const int day, int& max)
 {
     int maxtype;
     max = -1;
@@ -193,16 +208,24 @@ int Overall_Best_Sold_Type(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TY
 
 }
 
-void Stats(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES])
+void Stats(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const int day)
 {
     int analday;// :)
     int sales = -1;
     printf("What day would you like to analyze?");
     scanf_s(" %d", &analday);
+    while (check_input(analday, 0, day))
+    {
+        printf("Please enter valid day;");
+        scanf_s(" %d", &analday);
+    }
+    
     analday--;
     printf("Total sales: %d \n", Total_Sales_Per_Day(Cube, analday));
-    printf("Best sold brand is: %d : amount %d \n", Best_Sold_Brand(Cube, analday,sales), sales);
+    printf("Best sold brand is: %d : amount %d \n", Best_Sold_Brand(Cube, analday, sales), sales);
     printf("Best sold type is: %d : amount %d \n", Best_Sold_Type(Cube, analday, sales), sales);
+    
+    
 }
 
 void PrintBrandDay(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const int day, const int brand)
@@ -225,15 +248,44 @@ void PrintAll(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const i
     }
 }
 
-void OverallStats(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const int day) 
+void OverallStats(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const int day)
 {
     int max_sales_day = 0;
     int sales = 0;
-    printf("Best sold brand is: %d with sales: %d \n",Overall_Best_Sold_Brand(Cube, day, sales), sales);
+    printf("Best sold brand is: %d with sales: %d \n", Overall_Best_Sold_Brand(Cube, day, sales), sales);
     printf("Best sold type is: %d with sales: %d \n", Overall_Best_Sold_Type(Cube, day, sales), sales);
     printf("Best day with sales: %d is day: %d \n", OverallTotal(Cube, day, max_sales_day), max_sales_day + 1);
-    
 
+
+}
+
+void Deltas(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const int day)
+{
+    float delta = 0;
+    int yesterday = 0;
+    int daily_summ = 0;
+    int summ = 0;
+
+    for (int i = 0; i < NUM_OF_BRANDS; i++, summ = 0)
+    {
+        for (int d = 0; d < day; d++, daily_summ = 0)
+        {
+            for (int j = 0; j < NUM_OF_TYPES; j++)
+            {
+                daily_summ += Cube[d][i][j];
+            }
+            if (d != 0)
+            {
+                summ += daily_summ - yesterday;
+            }
+            yesterday = daily_summ;
+
+        }
+
+        delta = (float)summ / (day - 1);
+
+        printf("For Brand %d delta is %f \n", i, delta);
+    }
 }
 
 void init_array(int array[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES])
@@ -243,6 +295,8 @@ void init_array(int array[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES])
             for (int k = 0; k < NUM_OF_TYPES; k++)
                 array[i][j][k] = -1;
 }
+
+
 
 int main() {
     int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES];
@@ -260,7 +314,7 @@ int main() {
             Add_All(cube, days);
             break;
         case stats:
-            Stats(cube);
+            Stats(cube, days);
             break;
         case print:
             PrintAll(cube, days);
@@ -269,9 +323,10 @@ int main() {
             OverallStats(cube, days);
             break;
         case deltas:
+            Deltas(cube, days);
             break;
-            //default:
-            //    printf("Invalid input\n");
+        default:
+            printf("Invalid input\n");
         }
         printMenu();
         scanf_s("%d", &choice);
