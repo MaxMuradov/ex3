@@ -1,6 +1,6 @@
 /******************
-Name:
-ID:
+Name: Maxim Muradov
+ID: 346975386
 Assignment: ex3
 *******************/
 
