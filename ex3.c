@@ -5,6 +5,7 @@ Assignment: ex3
 *******************/
 
 #include <stdio.h>
+#include<stdbool.h>
 
 #define NUM_OF_BRANDS 5
 #define BRANDS_NAMES 15
@@ -92,7 +93,7 @@ bool check_input(int input, int leftborder, int rightborder)
 void Add_One(int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const int day)
 {
     int brand, amount;
-    scanf_s("%d", &brand);
+    scanf("%d", &brand);
     if (check_input(brand, 0, 4))
     {
         printf("this brand dont exist\n");
@@ -101,7 +102,7 @@ void Add_One(int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const int day)
     {
         for (int i = 0; i < NUM_OF_TYPES; i++)
         {
-            scanf_s(" %d", &amount);
+            scanf(" %d", &amount);
             Cube[day][brand][i] = amount;
         }
     }
@@ -125,7 +126,7 @@ void check_brands(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], con
 }
 // do it
 
-void Add_All(int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int& day)
+void Add_All(int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int day)
 {
     while (not_enought_data_for(Cube, day)) {
         printf("No data for brands ");
@@ -150,7 +151,7 @@ int Total_Sales_Per_Day(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES
     return total;
 }
 
-int OverallTotal(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const int day, int& max_day)
+int OverallTotal(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const int day, int max_day)
 {
     int t, max_total = -1;
     max_day = 0;
@@ -166,7 +167,7 @@ int OverallTotal(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], cons
     return max_total;
 }
 
-int Best_Sold_Brand(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const int day, int& max)
+int Best_Sold_Brand(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const int day, int max)
 {
     int maxbrand;
     max = -1;
@@ -187,7 +188,7 @@ int Best_Sold_Brand(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], c
     return maxbrand;
 }
 
-int Overall_Best_Sold_Brand(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const int day, int& maxsales)
+int Overall_Best_Sold_Brand(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const int day, int maxsales)
 {
     int best_sold_brand = -1;
     maxsales = -1;
@@ -213,7 +214,7 @@ int Overall_Best_Sold_Brand(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_T
 
 }
 
-int Best_Sold_Type(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const int day, int& max)
+int Best_Sold_Type(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const int day, int max)
 {
     int maxtype;
     max = -1;
@@ -234,7 +235,7 @@ int Best_Sold_Type(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], co
     return maxtype;
 }
 
-int Overall_Best_Sold_Type(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const int day, int& maxsales)
+int Overall_Best_Sold_Type(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const int day, int maxsales)
 {
     int best_sold_type = -1;
     maxsales = -1;
@@ -266,11 +267,11 @@ void Stats(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const int 
     int sales = -1;
     int tmp;
     printf("What day would you like to analyze?");
-    scanf_s(" %d", &analday);
+    scanf(" %d", &analday);
     while (check_input(analday, 0, day))
     {
         printf("Please enter valid day.");
-        scanf_s(" %d", &analday);
+        scanf(" %d", &analday);
     }
     
     printf("In day number %d:\n", analday--);
@@ -366,7 +367,7 @@ int main() {
     int days = 0;
     int choice;
     printMenu();
-    scanf_s("%d", &choice);
+    scanf("%d", &choice);
     while (choice != done) {
         switch (choice) {
         case addOne:
@@ -391,7 +392,7 @@ int main() {
             printf("Invalid input\n");
         }
         printMenu();
-        scanf_s("%d", &choice);
+        scanf("%d", &choice);
     }
     printf("Goodbye!\n");
     return 0;
