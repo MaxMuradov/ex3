@@ -317,7 +317,8 @@ void OverallStats(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], con
     printf("The best-selling type of car is ");
     printType(Overall_Best_Sold_Type(Cube, day, sales));
     printf(": %d$\n", sales);
-    printf("The most profitable day was day number %d: %d$ \n", max_sales_day + 1, OverallTotal(Cube, day, max_sales_day));
+    int tmp = OverallTotal(Cube, day, max_sales_day);
+    printf("The most profitable day was day number %d: %d$ \n", max_sales_day + 1, tmp);
 }
 
 void Deltas(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const int day)
