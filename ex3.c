@@ -279,7 +279,7 @@ void Stats(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const int 
     scanf(" %d", &analday);
     while (check_input(analday, 0, day))
     {
-        printf("Please enter valid day.\n");
+        printf("Please enter a valid day.\n");
         printf("What day would you like to analyze?\n");
         scanf(" %d", &analday);
     }
