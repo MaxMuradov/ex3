@@ -151,7 +151,7 @@ int Total_Sales_Per_Day(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES
     return total;
 }
 
-int OverallTotal(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const int day, int maxday)
+int OverallTotal(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const int day, int* maxday)
 {
     int t, max_total = -1;
     *maxday = 0;
