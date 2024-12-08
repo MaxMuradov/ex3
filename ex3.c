@@ -129,7 +129,7 @@ void check_brands(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], con
 }
 // do it
 
-void Add_All(int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int day)
+int Add_All(int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int day)
 {
     while (not_enought_data_for(Cube, day)) {
         printf("No data for brands ");
@@ -138,7 +138,7 @@ void Add_All(int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int day)
         Add_One(Cube, day);
     }
 
-    day++;
+    return ++day;
 }
 
 int Total_Sales_Per_Day(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const int day)
@@ -170,10 +170,10 @@ int OverallTotal(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], cons
     return max_total;
 }
 
-int Best_Sold_Brand(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const int day, int max)
+int Best_Sold_Brand(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const int day, int* max)
 {
     int maxbrand;
-    max = -1;
+    *max = -1;
     int brand_sale = 0;
     for (int i = 0; i < NUM_OF_BRANDS; i++, brand_sale = 0)
     {
@@ -181,9 +181,9 @@ int Best_Sold_Brand(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], c
         {
             brand_sale += Cube[day][i][j];
         }
-        if (brand_sale >= max)
+        if (brand_sale >= *max)
         {
-            max = brand_sale;
+            *max = brand_sale;
             maxbrand = i;
         }
     }
@@ -191,10 +191,10 @@ int Best_Sold_Brand(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], c
     return maxbrand;
 }
 
-int Overall_Best_Sold_Brand(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const int day, int maxsales)
+int Overall_Best_Sold_Brand(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const int day, int* maxsales)
 {
     int best_sold_brand = -1;
-    maxsales = -1;
+    *maxsales = -1;
     int summ_sales = 0;
     for (int i = 0; i < NUM_OF_BRANDS; i++, summ_sales = 0)
     {
@@ -206,9 +206,9 @@ int Overall_Best_Sold_Brand(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_T
             }
         }
 
-        if (summ_sales >= maxsales)
+        if (summ_sales >= *maxsales)
         {
-            maxsales = summ_sales;
+            *maxsales = summ_sales;
             best_sold_brand = i;
         }
     }
@@ -217,10 +217,10 @@ int Overall_Best_Sold_Brand(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_T
 
 }
 
-int Best_Sold_Type(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const int day, int max)
+int Best_Sold_Type(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const int day, int* max)
 {
     int maxtype;
-    max = -1;
+    *max = -1;
     int type_sale = 0;
     for (int j = 0; j < NUM_OF_TYPES; j++, type_sale = 0)
     {
@@ -228,9 +228,9 @@ int Best_Sold_Type(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], co
         {
             type_sale += Cube[day][i][j];
         }
-        if (type_sale >= max)
+        if (type_sale >= *max)
         {
-            max = type_sale;
+            *max = type_sale;
             maxtype = j;
         }
     }
@@ -238,10 +238,10 @@ int Best_Sold_Type(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], co
     return maxtype;
 }
 
-int Overall_Best_Sold_Type(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const int day, int maxsales)
+int Overall_Best_Sold_Type(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const int day, int* maxsales)
 {
     int best_sold_type = -1;
-    maxsales = -1;
+    *maxsales = -1;
     int summ_sales = 0;
     for (int j = 0; j < NUM_OF_TYPES; j++, summ_sales = 0)
     {
@@ -253,9 +253,9 @@ int Overall_Best_Sold_Type(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TY
             }
         }
 
-        if (summ_sales >= maxsales)
+        if (summ_sales >= *maxsales)
         {
-            maxsales = summ_sales;
+            *maxsales = summ_sales;
             best_sold_type = j;
         }
     }
@@ -279,10 +279,10 @@ void Stats(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const int 
     
     printf("In day number %d:\n", analday--);
     printf("The sales total was %d \n", Total_Sales_Per_Day(Cube, analday));
-    tmp = Best_Sold_Brand(Cube, analday, sales);
+    tmp = Best_Sold_Brand(Cube, analday, &sales);
     printf("The best sold brand with %d sales was ", sales);
     printBrand(tmp);
-    tmp = Best_Sold_Type(Cube, analday, sales);
+    tmp = Best_Sold_Type(Cube, analday, &sales);
     printf("\nThe best sold type with %d was ", sales);
     printType(tmp);
     printf("\n");
@@ -316,10 +316,10 @@ void OverallStats(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], con
     int max_total_sales = OverallTotal(Cube, day, &max_sales_day);
 
     int best_sold_brand_sales = 0;
-    int best_sold_brand = Overall_Best_Sold_Brand(Cube, day, best_sold_brand_sales);
+    int best_sold_brand = Overall_Best_Sold_Brand(Cube, day, &best_sold_brand_sales);
 
     int best_sold_type_sales = 0;
-    int best_sold_type = Overall_Best_Sold_Type(Cube, day, best_sold_type_sales);
+    int best_sold_type = Overall_Best_Sold_Type(Cube, day, &best_sold_type_sales);
 
     printf("The best-selling brand overall is ");
     printBrand(best_sold_brand);
@@ -387,7 +387,7 @@ int main() {
             Add_One(cube, days);
             break;
         case addAll:
-            Add_All(cube, days);
+            days = Add_All(cube, days);
             break;
         case stats:
             Stats(cube, days);
@@ -410,5 +410,4 @@ int main() {
     printf("Goodbye!\n");
     return 0;
 }
-
 
