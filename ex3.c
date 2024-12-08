@@ -4,6 +4,12 @@ ID: 346975386
 Assignment: ex3
 *******************/
 
+/*
+im sorry thats some func are too complicated in print and also about using pointers i just wanted to return some var thru parametrs of func 
+but it was much more complicated than in c++ where i can just give int& so yea, aaahh and forgive me please -til of bool, i know 
+i could actually make this code better for ex requirements but im working and dont have much time
+*/
+
 #include <stdio.h>
 #include<stdbool.h>
 
