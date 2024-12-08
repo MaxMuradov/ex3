@@ -275,7 +275,7 @@ void Stats(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const int 
     int analday;// :)
     int sales = -1;
     int tmp;
-    printf("What day would you like to analyze?");
+    printf("What day would you like to analyze?\n");
     scanf(" %d", &analday);
     while (check_input(analday, 0, day))
     {
@@ -306,6 +306,7 @@ void PrintBrandDay(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], co
 
 void PrintAll(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const int day)
 {
+    printf("*****************************************");
     for (int i = 0; i < NUM_OF_BRANDS; i++)
     {
         printf("Sales for brand ");
@@ -314,6 +315,7 @@ void PrintAll(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const i
         for (int j = 0; j < day; j++)
             PrintBrandDay(Cube, j, i);
     }
+    printf("*****************************************");
 }
 
 void OverallStats(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const int day)
