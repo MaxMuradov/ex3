@@ -289,7 +289,7 @@ void Stats(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const int 
     printf("The best sold brand with %d sales was ", sales);
     printBrand(tmp);
     tmp = Best_Sold_Type(Cube, analday, &sales);
-    printf("\nThe best sold type with %d was ", sales);
+    printf("\nThe best sold type with %d sales was ", sales);
     printType(tmp);
     printf("\n");
 }
