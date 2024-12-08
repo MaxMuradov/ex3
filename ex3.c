@@ -122,7 +122,10 @@ void check_brands(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], con
 {
     for (int i = 0; i < NUM_OF_BRANDS; i++)
         if (Cube[day][i][0] == -1)
+        {
             printBrand(i);
+            printf(" ");
+        }
 }
 // do it
 
