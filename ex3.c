@@ -306,7 +306,7 @@ void PrintBrandDay(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], co
 
 void PrintAll(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const int day)
 {
-    printf("*****************************************");
+    printf("*****************************************\n");
     for (int i = 0; i < NUM_OF_BRANDS; i++)
     {
         printf("Sales for ");
@@ -315,7 +315,7 @@ void PrintAll(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const i
         for (int j = 0; j < day; j++)
             PrintBrandDay(Cube, j, i);
     }
-    printf("*****************************************");
+    printf("*****************************************\n");
 }
 
 void OverallStats(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const int day)
