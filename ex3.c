@@ -309,7 +309,7 @@ void PrintAll(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const i
     printf("*****************************************");
     for (int i = 0; i < NUM_OF_BRANDS; i++)
     {
-        printf("Sales for brand ");
+        printf("Sales for ");
         printBrand(i);
         printf(":\n");
         for (int j = 0; j < day; j++)
