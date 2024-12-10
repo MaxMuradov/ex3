@@ -5,7 +5,8 @@ Assignment: ex3
 *******************/
 
 /*
-intro: in some functions im using pointers to return couple variables from function
+time spent on full logic: 4h
+time spent on coding style and adjusting to your prohibitions: 5h
 */
 
 #include <stdio.h>
@@ -166,32 +167,36 @@ int Total_Sales_Per_Day(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES
     return total;
 }
 
-int OverallTotal(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const int day, int* maxday)
+int OverallTotal(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const int day, int opt)
 {
     //func looking for max sales in some day
-    //returning total sales for day n 
-    //returning thru int* maxday day n
+    //returning total sales for day n if opt = 1
+    //returning maxday day n if opt = 0
     int t, max_total = -1;
-    *maxday = 0;
-    for (int i = day; i > 0; i--)
+    int maxday = 0;
+    for (int i = day; i >= 0; i--)
     {
         t = Total_Sales_Per_Day(Cube, i);
         if (t >= max_total)
         {
             max_total = t;
-            *maxday = i;
+            maxday = i;
         }
     }
-    return max_total;
+    
+    if (opt == 1)
+        return max_total;
+    else if (opt == 0)
+        return maxday;
 }
 
-int Best_Sold_Brand(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const int day, int* max)
+int Best_Sold_Brand(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const int day, int opt)
 {
     //func looking for max sales for some brand in some day
-    //returning best sold brand for a day
-    //returning thru int* max sales for that brand
+    //returning best sold brand for a day if opt =1
+    //returning max sales for that brand if opt = 0
     int maxbrand;
-    *max = -1;
+    int max = -1;
     int brand_sale = 0;
     for (int i = 0; i < NUM_OF_BRANDS; i++, brand_sale = 0)
     {
@@ -199,23 +204,25 @@ int Best_Sold_Brand(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], c
         {
             brand_sale += Cube[day][i][j];
         }
-        if (brand_sale >= *max)
+        if (brand_sale >= max)
         {
-            *max = brand_sale;
+            max = brand_sale;
             maxbrand = i;
         }
     }
-
-    return maxbrand;
+    if (opt == 1)
+        return maxbrand;
+    else if (opt == 0)
+        return max;
 }
 
-int Overall_Best_Sold_Brand(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const int day, int* maxsales)
+int Overall_Best_Sold_Brand(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const int day, int opt)
 {
     //func looking for max sales overall for brands
     //returning best sold brand overall
     //returning thru int* maxsales total sales for that brand
     int best_sold_brand = -1;
-    *maxsales = -1;
+    int maxsales = -1;
     int summ_sales = 0;
     for (int i = 0; i < NUM_OF_BRANDS; i++, summ_sales = 0)
     {
@@ -227,24 +234,27 @@ int Overall_Best_Sold_Brand(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_T
             }
         }
 
-        if (summ_sales >= *maxsales)
+        if (summ_sales >= maxsales)
         {
-            *maxsales = summ_sales;
+            maxsales = summ_sales;
             best_sold_brand = i;
         }
     }
 
-    return best_sold_brand;
+    if (opt == 1)
+        return best_sold_brand;
+    else if (opt == 0)
+        return maxsales;
 
 }
 
-int Best_Sold_Type(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const int day, int* max)
+int Best_Sold_Type(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const int day, int opt)
 {
     //func looking for max sales for some type in some day
-    //returning best sold type for a day
-    //returning thru int* max sales for that type
+    //returning best sold type for a day if opt = 1
+    //returning max sales for that type if opt = 0
     int maxtype;
-    *max = -1;
+    int max = -1;
     int type_sale = 0;
     for (int j = 0; j < NUM_OF_TYPES; j++, type_sale = 0)
     {
@@ -252,23 +262,25 @@ int Best_Sold_Type(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], co
         {
             type_sale += Cube[day][i][j];
         }
-        if (type_sale >= *max)
+        if (type_sale >= max)
         {
-            *max = type_sale;
+            max = type_sale;
             maxtype = j;
         }
     }
-
-    return maxtype;
+    if (opt == 1)
+        return maxtype;
+    else if (opt == 0)
+        return max;
 }
 
-int Overall_Best_Sold_Type(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const int day, int* maxsales)
+int Overall_Best_Sold_Type(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const int day, int opt)
 {
     //func looking for max sales overall for types
-    //returning best sold type overall
-    //returning thru int* maxsales total sales for that type
+    //returning best sold type overall if opt = 1
+    //returning maxsales total sales for that type if opt = 0
     int best_sold_type = -1;
-    *maxsales = -1;
+    int maxsales = -1;
     int summ_sales = 0;
     for (int j = 0; j < NUM_OF_TYPES; j++, summ_sales = 0)
     {
@@ -280,15 +292,17 @@ int Overall_Best_Sold_Type(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TY
             }
         }
 
-        if (summ_sales >= *maxsales)
+        if (summ_sales >= maxsales)
         {
-            *maxsales = summ_sales;
+            maxsales = summ_sales;
             best_sold_type = j;
         }
     }
 
-    return best_sold_type;
-
+    if (opt == 1)
+        return best_sold_type;
+    else if (opt == 0)
+        return maxsales;
 }
 
 void Stats(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const int day)
@@ -296,7 +310,8 @@ void Stats(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const int 
     //func that prints stats for a day by calling other func
     int analday;// :)
     int sales = -1;
-    int tmp;
+    int tmp = 0;
+    
     printf("What day would you like to analyze?\n");
     scanf(" %d", &analday);
     while (check_input(analday, 0, day) == 1)
@@ -306,13 +321,17 @@ void Stats(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const int 
         scanf(" %d", &analday);
     }
 
-    //sorry for this mess, on planet i cannot call func inside printf without warning
-    printf("In day number %d:\n", analday--);
-    printf("The sales total was %d \n", Total_Sales_Per_Day(Cube, analday));
-    tmp = Best_Sold_Brand(Cube, analday, &sales);
+
+    sales = Total_Sales_Per_Day(Cube, analday);
+    printf("In day number %d:\nThe sales total was %d \n", analday--, sales);
+    
+    tmp = Best_Sold_Brand(Cube, analday, 1);
+    sales = Best_Sold_Brand(Cube, analday, 0);
     printf("The best sold brand with %d sales was ", sales);
     printBrand(tmp);
-    tmp = Best_Sold_Type(Cube, analday, &sales);
+    
+    tmp = Best_Sold_Type(Cube, analday, 1);
+    sales = Best_Sold_Type(Cube, analday, 0);
     printf("\nThe best sold type with %d sales was ", sales);
     printType(tmp);
     printf("\n");
@@ -347,14 +366,14 @@ void PrintAll(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const i
 void OverallStats(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const int day)
 {
     //func that prints overall data by calling other func
-    int max_sales_day = 0;
-    int max_total_sales = OverallTotal(Cube, day, &max_sales_day);
+    int max_sales_day = OverallTotal(Cube, day, 0);
+    int max_total_sales = OverallTotal(Cube, day, 1);
 
-    int best_sold_brand_sales = 0;
-    int best_sold_brand = Overall_Best_Sold_Brand(Cube, day, &best_sold_brand_sales);
+    int best_sold_brand_sales = Overall_Best_Sold_Brand(Cube, day, 0);
+    int best_sold_brand = Overall_Best_Sold_Brand(Cube, day, 1);
 
-    int best_sold_type_sales = 0;
-    int best_sold_type = Overall_Best_Sold_Type(Cube, day, &best_sold_type_sales);
+    int best_sold_type_sales =  Overall_Best_Sold_Type(Cube, day, 0);
+    int best_sold_type = Overall_Best_Sold_Type(Cube, day, 1);
 
     printf("The best-selling brand overall is ");
     printBrand(best_sold_brand);
