@@ -188,6 +188,8 @@ int OverallTotal(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], cons
         return max_total;
     else if (opt == 0)
         return maxday;
+    else 
+        return -1;
 }
 
 int Best_Sold_Brand(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const int day, int opt)
