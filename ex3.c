@@ -5,13 +5,10 @@ Assignment: ex3
 *******************/
 
 /*
-im sorry thats some func are too complicated in print and also about using pointers i just wanted to return some var thru parametrs of func 
-but it was much more complicated than in c++ where i can just give int& so yea, aaahh and forgive me please -til of bool, i know 
-i could actually make this code better for ex requirements but im working and dont have much time
+intro: in some functions im using pointers to return couple variables from function
 */
 
 #include <stdio.h>
-#include<stdbool.h>
 
 #define NUM_OF_BRANDS 5
 #define BRANDS_NAMES 15
@@ -43,6 +40,7 @@ void printMenu() {
 
 void printBrand(int brand)
 {
+    //func that printing Brands
     switch (brand)
     {
     case 0:
@@ -68,6 +66,7 @@ void printBrand(int brand)
 
 void printType(int type)
 {
+    //func to print types
     switch (type)
     {
     case 0:
@@ -88,8 +87,9 @@ void printType(int type)
     }
 }
 
-bool check_input(int input, int leftborder, int rightborder)
+int check_input(int input, int leftborder, int rightborder)
 {
+    //func to check if input is in borders(Valid)
     if (input > rightborder || input < leftborder)
         return 1;
     else
@@ -98,6 +98,7 @@ bool check_input(int input, int leftborder, int rightborder)
 
 void Add_One(int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const int day)
 {
+    //func that initialize row of brand by type sales
     int brand, amount;
     scanf("%d", &brand);
     if (check_input(brand, 0, 4))
@@ -114,8 +115,10 @@ void Add_One(int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const int day)
     }
 }
 
-bool not_enought_data_for(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const int day)
+int not_enought_data_for(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const int day)
 {
+    //func that checks if cube have lack of info 
+    //(not all brand have been initialized)
     for (int i = 0; i < NUM_OF_BRANDS; i++)
     {
         if (Cube[day][i][0] == -1)
@@ -126,6 +129,7 @@ bool not_enought_data_for(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYP
 
 void check_brands(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const int day)
 {
+    //func that prints which brand are not initialized
     for (int i = 0; i < NUM_OF_BRANDS; i++)
         if (Cube[day][i][0] == -1)
         {
@@ -133,22 +137,24 @@ void check_brands(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], con
             printf(" ");
         }
 }
-// do it
 
 int Add_All(int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int day)
 {
-    while (not_enought_data_for(Cube, day)) {
+    //func that insert info for all brand in one day
+    while (not_enought_data_for(Cube, day) == 1) {
         printf("No data for brands ");
         check_brands(Cube, day);
         printf("\nPlease complete the data\n");
         Add_One(Cube, day);
     }
 
+    //returning number of "next day"
     return ++day;
 }
 
 int Total_Sales_Per_Day(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const int day)
 {
+    //summarizing total sales for a day
     int total = 0;
     for (int i = 0; i < NUM_OF_BRANDS; i++)
     {
@@ -162,6 +168,9 @@ int Total_Sales_Per_Day(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES
 
 int OverallTotal(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const int day, int* maxday)
 {
+    //func looking for max sales in some day
+    //returning total sales for day n 
+    //returning thru int* maxday day n
     int t, max_total = -1;
     *maxday = 0;
     for (int i = day; i > 0; i--)
@@ -178,6 +187,9 @@ int OverallTotal(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], cons
 
 int Best_Sold_Brand(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const int day, int* max)
 {
+    //func looking for max sales for some brand in some day
+    //returning best sold brand for a day
+    //returning thru int* max sales for that brand
     int maxbrand;
     *max = -1;
     int brand_sale = 0;
@@ -199,6 +211,9 @@ int Best_Sold_Brand(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], c
 
 int Overall_Best_Sold_Brand(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const int day, int* maxsales)
 {
+    //func looking for max sales overall for brands
+    //returning best sold brand overall
+    //returning thru int* maxsales total sales for that brand
     int best_sold_brand = -1;
     *maxsales = -1;
     int summ_sales = 0;
@@ -225,6 +240,9 @@ int Overall_Best_Sold_Brand(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_T
 
 int Best_Sold_Type(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const int day, int* max)
 {
+    //func looking for max sales for some type in some day
+    //returning best sold type for a day
+    //returning thru int* max sales for that type
     int maxtype;
     *max = -1;
     int type_sale = 0;
@@ -246,6 +264,9 @@ int Best_Sold_Type(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], co
 
 int Overall_Best_Sold_Type(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const int day, int* maxsales)
 {
+    //func looking for max sales overall for types
+    //returning best sold type overall
+    //returning thru int* maxsales total sales for that type
     int best_sold_type = -1;
     *maxsales = -1;
     int summ_sales = 0;
@@ -272,18 +293,20 @@ int Overall_Best_Sold_Type(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TY
 
 void Stats(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const int day)
 {
+    //func that prints stats for a day by calling other func
     int analday;// :)
     int sales = -1;
     int tmp;
     printf("What day would you like to analyze?\n");
     scanf(" %d", &analday);
-    while (check_input(analday, 0, day))
+    while (check_input(analday, 0, day) == 1)
     {
         printf("Please enter a valid day.\n");
         printf("What day would you like to analyze?\n");
         scanf(" %d", &analday);
     }
-    
+
+    //sorry for this mess, on planet i cannot call func inside printf without warning
     printf("In day number %d:\n", analday--);
     printf("The sales total was %d \n", Total_Sales_Per_Day(Cube, analday));
     tmp = Best_Sold_Brand(Cube, analday, &sales);
@@ -297,6 +320,7 @@ void Stats(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const int 
 
 void PrintBrandDay(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const int day, const int brand)
 {
+    //func that prints cube data for one day
     int suv = Cube[day][brand][0];
     int sedan = Cube[day][brand][1];
     int coup = Cube[day][brand][2];
@@ -307,6 +331,7 @@ void PrintBrandDay(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], co
 
 void PrintAll(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const int day)
 {
+    //func that prints cube data for all days by calling other func
     printf("*****************************************\n");
     for (int i = 0; i < NUM_OF_BRANDS; i++)
     {
@@ -321,6 +346,7 @@ void PrintAll(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const i
 
 void OverallStats(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const int day)
 {
+    //func that prints overall data by calling other func
     int max_sales_day = 0;
     int max_total_sales = OverallTotal(Cube, day, &max_sales_day);
 
@@ -344,6 +370,7 @@ void OverallStats(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], con
 
 void Deltas(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const int day)
 {
+    //func that printing deltas for all brands
     float delta = 0;
     int yesterday = 0;
     int daily_summ = 0;
@@ -375,6 +402,7 @@ void Deltas(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const int
 
 void init_array(int array[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES])
 {
+    //func that initialize cube to -1
     for (int i = 0; i < DAYS_IN_YEAR; i++)
         for (int j = 0; j < NUM_OF_BRANDS; j++)
             for (int k = 0; k < NUM_OF_TYPES; k++)
@@ -396,6 +424,7 @@ int main() {
             Add_One(cube, days);
             break;
         case addAll:
+            //days++ (new day)
             days = Add_All(cube, days);
             break;
         case stats:
