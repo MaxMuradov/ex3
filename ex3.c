@@ -188,6 +188,8 @@ int OverallTotal(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], cons
         return max_total;
     else if (opt == 0)
         return maxday;
+    else 
+        return -1;
 }
 
 int Best_Sold_Brand(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const int day, int opt)
@@ -214,6 +216,8 @@ int Best_Sold_Brand(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], c
         return maxbrand;
     else if (opt == 0)
         return max;
+    else 
+        return -1;
 }
 
 int Overall_Best_Sold_Brand(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const int day, int opt)
@@ -245,6 +249,8 @@ int Overall_Best_Sold_Brand(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_T
         return best_sold_brand;
     else if (opt == 0)
         return maxsales;
+    else 
+        return -1;
 
 }
 
@@ -272,6 +278,8 @@ int Best_Sold_Type(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], co
         return maxtype;
     else if (opt == 0)
         return max;
+    else
+        return -1;
 }
 
 int Overall_Best_Sold_Type(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const int day, int opt)
@@ -303,6 +311,8 @@ int Overall_Best_Sold_Type(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TY
         return best_sold_type;
     else if (opt == 0)
         return maxsales;
+    else 
+        return -1;
 }
 
 void Stats(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const int day)
