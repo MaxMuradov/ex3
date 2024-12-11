@@ -97,17 +97,18 @@ int check_input(int input, int leftborder, int rightborder)
         return 0;
 }
 
-void Add_One(int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const int day)
+void Add_One(int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const int day,int Brands[NUM_OF_BRANDS])
 {
     //func that initialize row of brand by type sales
     int brand, amount;
     scanf("%d", &brand);
-    if (check_input(brand, 0, 4))
+    if (check_input(brand, 0, 4) || Brands[brand] == 1)
     {
-        printf("this brand dont exist\n");
+        printf("This brand is not valid\n");
     }
     else
     {
+        Brands[brand] = 1;
         for (int i = 0; i < NUM_OF_TYPES; i++)
         {
             scanf(" %d", &amount);
@@ -139,18 +140,15 @@ void check_brands(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], con
         }
 }
 
-int Add_All(int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int day)
+void Add_All(int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], int day, int Brands[NUM_OF_BRANDS])
 {
     //func that insert info for all brand in one day
     while (not_enought_data_for(Cube, day) == 1) {
         printf("No data for brands ");
         check_brands(Cube, day);
         printf("\nPlease complete the data\n");
-        Add_One(Cube, day);
+        Add_One(Cube, day, Brands);
     }
-
-    //returning number of "next day"
-    return ++day;
 }
 
 int Total_Sales_Per_Day(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const int day)
@@ -177,7 +175,7 @@ int OverallTotal(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], cons
     for (int i = day; i >= 0; i--)
     {
         t = Total_Sales_Per_Day(Cube, i);
-        if (t >= max_total)
+        if (t > max_total)
         {
             max_total = t;
             maxday = i;
@@ -206,7 +204,7 @@ int Best_Sold_Brand(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], c
         {
             brand_sale += Cube[day][i][j];
         }
-        if (brand_sale >= max)
+        if (brand_sale > max)
         {
             max = brand_sale;
             maxbrand = i;
@@ -238,7 +236,7 @@ int Overall_Best_Sold_Brand(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_T
             }
         }
 
-        if (summ_sales >= maxsales)
+        if (summ_sales > maxsales)
         {
             maxsales = summ_sales;
             best_sold_brand = i;
@@ -268,7 +266,7 @@ int Best_Sold_Type(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], co
         {
             type_sale += Cube[day][i][j];
         }
-        if (type_sale >= max)
+        if (type_sale > max)
         {
             max = type_sale;
             maxtype = j;
@@ -300,7 +298,7 @@ int Overall_Best_Sold_Type(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TY
             }
         }
 
-        if (summ_sales >= maxsales)
+        if (summ_sales > maxsales)
         {
             maxsales = summ_sales;
             best_sold_type = j;
@@ -324,7 +322,7 @@ void Stats(const int Cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES], const int 
     
     printf("What day would you like to analyze?\n");
     scanf(" %d", &analday);
-    while (check_input(analday, 0, day) == 1)
+    while (check_input(analday, 1, day) == 1)
     {
         printf("Please enter a valid day.\n");
         printf("What day would you like to analyze?\n");
@@ -445,16 +443,24 @@ int main() {
     init_array(cube);
     int days = 0;
     int choice;
+    //array Brands is arry of flags which brands have been inserted 
+    int Brands[NUM_OF_BRANDS] = {0,0,0,0,0}; 
     printMenu();
     scanf("%d", &choice);
     while (choice != done) {
         switch (choice) {
         case addOne:
-            Add_One(cube, days);
+            Add_One(cube, days, Brands);
             break;
         case addAll:
-            //days++ (new day)
-            days = Add_All(cube, days);
+            if (days == DAYS_IN_YEAR)
+            {
+                break;
+            }
+            Add_All(cube, days, Brands);
+            days++;
+            for (int i = 0; i < NUM_OF_BRANDS; i++)
+                Brands[i] = 0;
             break;
         case stats:
             Stats(cube, days);
@@ -477,4 +483,3 @@ int main() {
     printf("Goodbye!\n");
     return 0;
 }
-
